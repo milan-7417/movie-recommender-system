@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1 class="heading">
+    Welcome,
+    <span class="username">
+        {{ session.user }}
+    </span>
+</h1>
+
+<div class="search-box">
+
+    <form action="/recommend"
+    method="POST">
+
+        <div class="search-wrapper">
+
+            <input
+                type="text"
+                name="movie_name"
+                id="movie-search"
+                placeholder="Search movie..."
+                autocomplete="off"
+                required
+            >
+
+            <div id="suggestions">
+            </div>
+
+        </div>
+
+        <button type="submit">
+            Recommend
+        </button>
+
+    </form>
+
+</div>
+
+
+{% if recommendations %}
+
+<h2 class="recommend-title">
+    Recommended Movies
+</h2>
+
+<div class="movie-grid">
+
+    {% for movie in recommendations %}
+
+<a href="{{ url_for(
+'movie_details',
+movie_name=movie.title
+) }}"
+class="movie-link">
+
+<div class="movie-card">
+
+    <img
+        src="{{ movie.poster }}"
+        alt="poster"
+        class="movie-poster"
+    >
+
+    <div class="movie-info">
+
+        <h3>
+            {{ movie.title }}
+        </h3>
+
+        <div class="movie-meta">
+
+            <span class="rating-badge">
+                ⭐ {{ movie.rating }}
+            </span>
+
+            <span class="year">
+                📅 {{ movie.year }}
+            </span>
+
+        </div>
+
+        <p>
+            🎭 {{ movie.genre }}
+        </p>
+
+        <p>
+            👥 {{ movie.cast }}
+        </p>
+
+        <p class="description">
+            {{ movie.description }}
+        </p>
+
+        <form
+        action="/save_movie"
+        method="POST">
+
+            <input
+            type="hidden"
+            name="movie_name"
+            value="{{ movie.title }}">
+
+            <button
+            class="watchlist-btn"
+            type="submit">
+
+                ❤️ Add to Watchlist
+
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+</a>
+
+{% endfor %}
+{% endif %}
+
+{% endblock %}
+

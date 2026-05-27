@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="watchlist-page">
+
+    <h1 class="heading">
+        ❤️ My Watchlist
+    </h1>
+
+    <div class="movie-grid">
+
+        {% for movie in movies %}
+
+        <div class="movie-card">
+
+            <a
+                href="{{ url_for(
+                'movie_details',
+                movie_name=movie.movie_name
+                ) }}"
+                class="movie-link"
+            >
+
+                <h3>
+                    {{ movie.movie_name }}
+                </h3>
+
+            </a>
+
+            <form
+                action="/delete_watchlist"
+                method="POST"
+            >
+
+                <input
+                    type="hidden"
+                    name="movie_name"
+                    value="{{ movie.movie_name }}"
+                >
+
+                <button
+                    class="delete-btn"
+                    type="submit"
+                >
+                    🗑 Delete
+                </button>
+
+            </form>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+{% endblock %}

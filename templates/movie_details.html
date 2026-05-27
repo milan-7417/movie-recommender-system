@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="details-page">
+
+<div class="movie-details-container">
+
+    <div class="movie-details-card">
+
+        <img
+        src="{{ movie.poster }}"
+        class="details-poster">
+
+        <div class="details-content">
+
+            <h1>
+                {{ movie.title }}
+            </h1>
+
+            <div class="details-meta">
+
+                <span class="rating">
+                    ⭐ {{ movie.rating }}
+                </span>
+
+                <span class="year">
+                    📅 {{ movie.year }}
+                </span>
+
+            </div>
+
+            <p>
+                <strong>
+                    🎭 Genre:
+                </strong>
+
+                {{ movie.genre }}
+            </p>
+
+            <p>
+                <strong>
+                    👥 Cast:
+                </strong>
+
+                {{ movie.cast }}
+            </p>
+
+            <p class="full-description">
+
+                {{ movie.description }}
+
+            </p>
+
+            <form
+            action="/save_movie"
+            method="POST">
+
+                <input
+                type="hidden"
+                name="movie_name"
+                value="{{ movie.title }}">
+
+                <button
+                class="watchlist-btn">
+
+                    ❤️ Add to Watchlist
+
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+</div>
+
+{% endblock %}
