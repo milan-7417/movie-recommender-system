@@ -33,12 +33,39 @@ movies = pickle.load(
     )
 )
 
+import gdown
+
+
+similarity_path = os.path.join(
+    DATA_DIR,
+    "similarity.pkl"
+)
+
+if not os.path.exists(
+    similarity_path
+):
+
+    file_id = (
+        "1spa3PsYX88mI3K3A6-3o1_Uz7Hpvl63S"
+    )
+
+    url = (
+        f"https://drive.google.com/uc?id={file_id}"
+    )
+
+    print(
+        "Downloading similarity.pkl..."
+    )
+
+    gdown.download(
+        url,
+        similarity_path,
+        quiet=False
+    )
+
 similarity = pickle.load(
     open(
-        os.path.join(
-            DATA_DIR,
-            "similarity.pkl"
-        ),
+        similarity_path,
         "rb"
     )
 )
@@ -114,10 +141,10 @@ def content_based(movie_name):
 # ==========================
 # OMDB API DETAILS
 # ==========================
-
+import os
 def get_movie_details(movie_name):
 
-    API_KEY = "b9329543"
+    API_KEY = os.getenv("OMDB_API_KEY")
 
     url = (
         f"http://www.omdbapi.com/"
